@@ -31,6 +31,8 @@ function addPointLinePoly () {
 
 } 
 
+//Function for adding Earthqauke data feature to Map 
+function getEarthquakes () {
 
 	// and a variable that will hold the layer itself – we need to do this outside the function so that wecan use it to remove the layer later on
 	var earthquakelayer;
@@ -60,4 +62,10 @@ function addPointLinePoly () {
 	earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
 	// change the map zoom so that all the data is shown
 	mymap.fitBounds(earthquakelayer.getBounds());
-	}
+	} 
+    //code that will load the Earthquake map data AFTER the page has loaded
+	document.addEventListener('DOMContentLoaded', function() {
+    getEarthquakes();
+    }, false); 
+
+}
