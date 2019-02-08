@@ -160,7 +160,15 @@
 
     <!--Reference New Leaflet Function File--> 
     <script src="js/leafletfunction.js"></script> 
-    <script>addPointLinePoly();</script>
+    <script>addPointLinePoly();</script> 
+    <script>getEarthquakes();</script>
+
+    <!--code that will load the Earthquake map data AFTER the page has loaded-->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    getEarthquakes();
+    }, false); 
+    </script>
 
 
 </body>
