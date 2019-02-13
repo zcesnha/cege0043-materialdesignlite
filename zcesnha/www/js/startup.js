@@ -7,4 +7,11 @@ function trackAndCircle() {
 	//calling create point, line and poly 
 	addPointLinePoly(); 
 
+} 
+
+// function automatically loads trackLocation and addPointLinePoly 
+function startup() {
+	document.addEventListener('DOMContentLoaded', function() {
+	trackAndCircle ();
+	}, false);
 }
