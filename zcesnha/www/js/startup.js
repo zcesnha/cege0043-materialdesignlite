@@ -7,6 +7,9 @@ function trackAndCircle() {
 	//calling create point, line and poly 
 	addPointLinePoly(); 
 
+	//calling Earthquakes data function 
+	getEarthquakes(); 
+
 } 
 
 // function automatically loads trackLocation and addPointLinePoly 
