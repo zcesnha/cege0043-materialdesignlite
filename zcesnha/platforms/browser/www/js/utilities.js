@@ -1,5 +1,6 @@
 var httpPortNumber;
 var httpsPortNumber;
+//Extracting port number from port.xml file
 function getPort(){
  var xhr = new XMLHttpRequest();
  xhr.addEventListener("load", function () {

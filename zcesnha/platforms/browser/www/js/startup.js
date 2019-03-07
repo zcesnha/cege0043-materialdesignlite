@@ -10,9 +10,11 @@ function trackAndCircle() {
 	//calling Earthquakes data function 
 	getEarthquakes(); 
 
+	getPort(); 
+
 } 
 
-// function automatically loads trackLocation and addPointLinePoly 
+// function automatically loads requested functions
 function startup() {
 	document.addEventListener('DOMContentLoaded', function() {
 	trackAndCircle ();
