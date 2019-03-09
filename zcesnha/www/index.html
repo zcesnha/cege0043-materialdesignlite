@@ -99,6 +99,9 @@
         <li class="mdl-menu__item" onclick="menuClicked()">Legal Information</li>
         </ul> 
 
+        <!-- Refernces code that means we can simply link HTML form -->
+        <script src="https://www.w3schools.com/lib/w3.js"></script>
+
         </div>
       </header> 
       
@@ -145,14 +148,10 @@
             <div id="mapid" style="width: 600px; height: 400px;"></div>
             </main> 
 
-           <!--  New Div for AJAX -->
-            <h1>Change DIV content using AJAX</h1>
-            <div id="ajaxrequest">this is the unchanged div content</div>>
-            <button id="button1" onclick="callDivNodeJSChange()">Click me to change the DIV content
-            </button> 
-            <!-- adds a box to choose which html file is used for the div content  -->
-            <p>Type the html file name here - note you need to include .html</p>
-            <input type="text" name="filename" id="filename" size=50>
+           <!--  New Div for HTML Form -->
+           <div id="ajaxtext" style="width: 1600px; height: 20px;">
+           <div w3-include-html="createForm.html"></div>
+           </div>
 
           </div>
         </div>
