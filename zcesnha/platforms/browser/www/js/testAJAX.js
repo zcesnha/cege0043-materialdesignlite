@@ -1,24 +1,18 @@
-var xhrNode;
+var xhr;
 function callDivNodeJSChange() {
-xhrNode = new XMLHttpRequest();
-var url = "http://developer.cege.ucl.ac.uk:"+31277;
-xhrNode.open("GET", url, true);
-xhrNode.onreadystatechange = processDivNodeJSChange;
-try {
- xhrNode.setRequestHeader("Content-Type", "application/x-www-formurlencoded");
-}
-catch (e) {
-// this only works in internet explorer
-}
-xhrNode.send();
+xhr = new XMLHttpRequest();
+var filename = document.getElementById("filename").value;
+xhr.open("GET", filename, true);
+xhr.onreadystatechange = processDivNodeJSChange;
+xhr.send();
 }
 function processDivNodeJSChange() {
-if (xhrNode.readyState < 4) // while waiting response from server
- document.getElementById('ajaxtest').innerHTML = "Loading...";
- else if (xhrNode.readyState === 4) { // 4 = Response from server has been completely loaded.
- if (xhrNode.status == 200 && xhrNode.status < 300)
+if (xhr.readyState < 4) // while waiting response from server
+ document.getElementById('div1').innerHTML = "Loading...";
+ else if (xhr.readyState === 4) { // 4 = Response from server has been completely loaded.
+ if (xhr.status == 200 && xhr.status < 300)
 // http status between 200 to 299 are all successful
- document.getElementById('ajaxtest').innerHTML = xhrNode.responseText;
+ document.getElementById('div1').innerHTML = xhr.responseText;
  }
 } 
 
