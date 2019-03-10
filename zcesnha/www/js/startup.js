@@ -10,6 +10,7 @@ function trackAndCircle() {
 	//calling Earthquakes data function 
 	getEarthquakes(); 
 
+	//calling port detection function 
 	getPort(); 
 
 } 
