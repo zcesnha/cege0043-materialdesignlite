@@ -99,9 +99,6 @@
         <li class="mdl-menu__item" onclick="menuClicked()">Legal Information</li>
         </ul> 
 
-        <!-- Refernces W3-include-HTML code that means we can simply link HTML form, rather than insert HTML elements into this file -->
-        <script src="https://www.w3schools.com/lib/w3.js"></script>
-
         </div>
       </header> 
       
@@ -147,11 +144,61 @@
             <main class="mdl-layout__content mdl-color--grey-100">
             <div id="mapid" style="width: 600px; height: 400px;"></div>
             </main> 
-
-           <!--  New Div for HTML Form -->
-           <div id="ajaxtext" style="width: 1600px; height: 20px;">
-           <div w3-include-html="createForm.html"></div>
-           </div>  
+d
+           <!--  New Div for Form with HTML Code -->
+            <div>
+              <!-- Labels with text boxes -->
+              <label for="name">Name</label><input type="text" size="25" id="name"/><br />
+              <label for="surname">Surname</label><input type="text" size="25" id="surname"/><br />
+              <label for="module">Module</label><input type="text" size="25" id="module"/><br /> 
+              <label for="latitude">Latitude</label><input type="text" size="25" id="latitude"/><br /> 
+              <label for="longitude">Longitude</label><input type="text" size="25" id="longitude"/><br /> 
+              <!-- Radio Buttons -->
+              <p>Would you like lectures in the morning or afternoon?</p>
+              Morning: <input type="radio" name="amorpm" id="morning" /><br />
+              Afternoon: <input type="radio" name="amorpm" id ="afternoon"/><br />
+              <!-- Options List -->
+              <p>Which modules are you taking?</p>
+              CEGEG077: <input type="checkbox" name="modules" id = check1 value="CEGEG077"
+              checked="yes" /><br />
+              CEGEG129: <input type="checkbox" name="modules" id = check2 value="CEGEG129"
+              /><br />
+              CEGEG082: <input type="checkbox" name="modules" id = check3 value="CEGEG082"
+              /><br />
+              CEGEG034: <input type="checkbox" name="modules" id = check4 value="CEGEG034"
+              /><br />
+              <!-- Drop List -->
+              <p>What is your first language?</p>
+              <select name="languageselectbox" id="languageselectbox">
+              <option >English </option>
+              <option>Mandarin</option>
+              <option>Greek</option>
+              <option>Italian</option>
+              <option>Spanish</option>
+              <option>Other</option>
+              </select>
+              <br /> 
+              <!-- Adding a Button which Uploads Data -->
+              <br><button id="startUpload" onclick="startDataUpload()">Start Data Upload</button>
+              <div id="dataUploadResult">The result of the upload goes here
+              <script> var client; // the global variable that holds the request
+              function processData(postString) {
+               client = new XMLHttpRequest();
+               client.open('POST','http://developer.cege.ucl.ac.uk:30277/reflectData',true);
+               client.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+               client.onreadystatechange = dataUploaded;
+               client.send(postString);
+              }
+              // create the code to wait for the response from the data server, and process the response once it is received
+              function dataUploaded() {
+               // this function listens out for the server to say that the data is ready - i.e. has state 4
+               if (client.readyState == 4) {
+               // change the DIV to show the response
+               document.getElementById("dataUploadResult").innerHTML = client.responseText;
+               }
+              }
+            </script>
+            </div>  
 
           </div>
         </div>

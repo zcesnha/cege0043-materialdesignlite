@@ -13,14 +13,7 @@ function trackAndCircle() {
 	//calling port detection function 
 	getPort(); 
 
-	loadW3HTML(); 
-
 } 
-
-//HTML form code
-function loadW3HTML() {
-	w3.includeHTML();
-}
 
 // function automatically loads requested functions
 function startup() {
