@@ -34,6 +34,13 @@ var longitude = document.getElementById("longitude").value;
 postString = postString + "&latitude=" + latitude + "&longitude=" +
 longitude;
 
-//should always be last in the method 
-processData (postString); 
-}
+//Connects to POST GIS database 
+function processData(postString) {
+ client = new XMLHttpRequest();
+ postString = postString + "&port_id=" + httpPortNumber;
+ var url = 'http://developer.cege.ucl.ac.uk:'+ httpPortNumber + "/uploadData";
+ client.open('POST',url,true);
+ client.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+ client.onreadystatechange = dataUploaded; 
+ client.send(postString);
+} 
