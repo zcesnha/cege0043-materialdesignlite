@@ -44,3 +44,6 @@ function processData(postString) {
  client.onreadystatechange = dataUploaded; 
  client.send(postString);
 } 
+//should always be last line in the server file
+processData (postString); 
+}
