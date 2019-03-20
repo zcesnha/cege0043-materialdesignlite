@@ -40,6 +40,7 @@ var client;
 //Connects to POST GIS Database
 function processData(postString) {
    client = new XMLHttpRequest();
+   postString = postString + "&port_id=" + httpPortNumber;
    var url = 'http://developer.cege.ucl.ac.uk:'+httpPortNumber+'/uploadData';
    alert(url);
    client.open('POST',url,true);
