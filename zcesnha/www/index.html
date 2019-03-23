@@ -165,19 +165,18 @@
     <!--Reference New Leaflet Map File-->
     <script src="js/leaflet.js"></script> 
 
+    <!-- Reference New Automation File (Should be before Leaflet Function!!) -->
+    <script src="js/startup.js"></script> 
+    <!-- Calls startup function (automatically loads requested functions)-->
+    <script>startup(); </script> 
+
     <!--Reference New Leaflet Function File--> 
     <script src="js/leafletfunction.js"></script> 
     <!-- <script>addPointLinePoly();</script> --> 
-    <script>getEarthquakes();</script>  
+    <script>getFormData();</script>  
 
     <!-- Reference New User Tracking File -->
     <script src="js/userTracking.js"></script> 
-
-    <!-- Reference New Automation File -->
-    <script src="js/startup.js"></script> 
-
-    <!-- Calls startup function (automatically loads requested functions)-->
-    <script>startup(); </script> 
 
      <!-- Reference Utilities File -->
     <script src="js/utilities.js"></script> 
