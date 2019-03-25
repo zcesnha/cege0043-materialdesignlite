@@ -5,17 +5,17 @@ function trackAndCircle() {
 	trackLocation(); 
 
 	//calling create point, line and poly 
-	addPointLinePoly(); 
-
-	//calling Earthquakes data function 
-	getEarthquakes(); 
+	addPointLinePoly();  
 
 	//calling port detection function 
 	getPort(); 
 
-    //calling automatic HTML code
+	//calling automatic HTML code
 	loadW3HTML(); 
 
+	//calling form data
+	getFormData();
+	
 } 
 
 //HTML form code

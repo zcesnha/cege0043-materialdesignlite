@@ -1,7 +1,7 @@
-// Global Ajax Request for Earthquakes Data
+// Global Ajax Request for Form Data
 var client; 
 
-var earthquakes; 
+var form; 
 
 // Function for creating Map Features
 function addPointLinePoly () {
@@ -33,44 +33,47 @@ function addPointLinePoly () {
 
 } 
 
-//Function for adding Earthqauke data feature to Map 
-function getEarthquakes () {
+function getFormData () {
 
 	// and a variable that will hold the layer itself – we need to do this outside the function so that wecan use it to remove the layer later on
-	var earthquakelayer;
-	// create the code to get the Earthquakes data using an XMLHttpRequest
-	function getEarthquakes() {
-	client = new XMLHttpRequest();
-	client.open('GET','https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson');
-	client.onreadystatechange = earthquakeResponse; // note don't use earthquakeResponse() with brackets as that doesn't work
-	client.send();
+	var FormDatalayer;
+	
+	// create the code to get the Form Data data using an XMLHttpRequest
+	function getFormData() {
+		client = new XMLHttpRequest();
+		var url = 'http://developer.cege.ucl.ac.uk:'+httpPortNumber+'/getGeoJSON/london_highway/geom';
+		client.open('GET',url);
+		client.onreadystatechange = FormDataResponse; // note don't use FormDataResponse() with brackets as that doesn't work
+		client.send();
 	} 
+	
 	// create the code to wait for the response from the data server, and process the response once it isreceived
-	function earthquakeResponse() {
-	// this function listens out for the server to say that the data is ready - i.e. has state 4
-	if (client.readyState == 4) {
-	// once the data is ready, process the data
-	var earthquakedata = client.responseText;
-	loadEarthquakelayer(earthquakedata);
-	}
+	function FormDataResponse() {
+		// this function listens out for the server to say that the data is ready - i.e. has state 4
+		if (client.readyState == 4) {
+		// once the data is ready, process the data
+		var formdata = client.responseText;
+		loadFormLayer(formdata);
+		}
 	} 
-	// define a global variable to hold the layer so that we can use it later on
-	var earthquakelayer;
+	
+	var FormDatalayer; 
+
 	// convert the received data - which is text - to JSON format and add it to the map
-	function loadEarthquakelayer(earthquakedata) {
-	// convert the text to JSON
-	var earthquakejson = JSON.parse(earthquakedata); 
+	function loadFormLayer(formdata) {
+		// convert the text to JSON
+		var FormDatajson = JSON.parse(formdata); 
+		form = FormDatajson;
+		// add the JSON layer onto the map - it will appear using the default icons
+		FormDatalayer = L.geoJson(FormDatajson).addTo(mymap);
+		// change the map zoom so that all the data is shown
+		mymap.fitBounds(FormDatalayer.getBounds());
+	}
 
-	earthquakes = earthquakejson;
-
-	// add the JSON layer onto the map - it will appear using the default icons
-	earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
-	// change the map zoom so that all the data is shown
-	mymap.fitBounds(earthquakelayer.getBounds());
-	} 
-    //code that will load the Earthquake map data AFTER the page has loaded
+    //code that will load the Form Data to map data AFTER the page has loaded
 	document.addEventListener('DOMContentLoaded', function() {
-    getEarthquakes();
+    getFormData();
     }, false); 
 
-}
+} 
+
