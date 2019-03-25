@@ -41,7 +41,7 @@ function getFormData () {
 	// create the code to get the Form Data data using an XMLHttpRequest
 	function getFormData() {
 		client = new XMLHttpRequest();
-		var url = 'http://developer.cege.ucl.ac.uk:'+httpPortNumber+'/getGeoJSON/london_poi/geom';
+		var url = 'http://developer.cege.ucl.ac.uk:'+httpPortNumber+'/getGeoJSON/london_highway/geom';
 		client.open('GET',url);
 		client.onreadystatechange = FormDataResponse; // note don't use FormDataResponse() with brackets as that doesn't work
 		client.send();
