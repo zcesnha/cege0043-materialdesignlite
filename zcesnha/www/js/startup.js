@@ -14,7 +14,7 @@ function trackAndCircle() {
 	loadW3HTML(); 
 
 	//calling form data
-	getFormData();
+	startFormDataLoad();
 	
 } 
 

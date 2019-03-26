@@ -33,47 +33,68 @@ function addPointLinePoly () {
 
 } 
 
-function getFormData () {
+function startFormDataLoad() {
+	
+	var xhrFormData;
 
-	// and a variable that will hold the layer itself – we need to do this outside the function so that wecan use it to remove the layer later on
-	var FormDatalayer;
-	
-	// create the code to get the Form Data data using an XMLHttpRequest
-	function getFormData() {
-		client = new XMLHttpRequest();
-		var url = 'http://developer.cege.ucl.ac.uk:'+httpPortNumber+'/getGeoJSON/london_highway/geom';
-		client.open('GET',url);
-		client.onreadystatechange = FormDataResponse; // note don't use FormDataResponse() with brackets as that doesn't work
-		client.send();
-	} 
-	
-	// create the code to wait for the response from the data server, and process the response once it isreceived
-	function FormDataResponse() {
-		// this function listens out for the server to say that the data is ready - i.e. has state 4
-		if (client.readyState == 4) {
-		// once the data is ready, process the data
-		var formdata = client.responseText;
-		loadFormLayer(formdata);
-		}
-	} 
-	
-	var FormDatalayer; 
-
-	// convert the received data - which is text - to JSON format and add it to the map
-	function loadFormLayer(formdata) {
-		// convert the text to JSON
-		var FormDatajson = JSON.parse(formdata); 
-		form = FormDatajson;
-		// add the JSON layer onto the map - it will appear using the default icons
-		FormDatalayer = L.geoJson(FormDatajson).addTo(mymap);
-		// change the map zoom so that all the data is shown
-		mymap.fitBounds(FormDatalayer.getBounds());
+	function startFormDataLoad() {
+		 xhrFormData = new XMLHttpRequest();
+		 var url = "http://developer.cege.ucl.ac.uk:"+ httpPortNumber;
+		 url = url + "/getGeoJSON/formdata/geom/"+ httpPortNumber;
+		 xhrFormData.open("GET", url, true);
+		 xhrFormData.onreadystatechange = formDataResponse;
+		 xhrFormData.send();
 	}
 
-    //code that will load the Form Data to map data AFTER the page has loaded
+	function formDataResponse(){
+		 if (xhrFormData.readyState == 4) {
+		 // once the data is ready, process the data
+		 var formData = xhrFormData.responseText;
+		 loadFormData(formData);
+	 	}
+	}
+
+	// keep the layer global so that we can automatically pop up a
+	// pop-up menu on a point if necessary 
+	// we can also use this to determine distance for the proximity alert
+	var formLayer;
+
+	function loadFormData(formData) {
+		 // convert the text received from the server to JSON
+		 var formJSON = JSON.parse(formData);
+		 // load the geoJSON layer
+		 formLayer = L.geoJson(formJSON,
+		 {
+		 // use point to layer to create the points
+		 pointToLayer: function (feature, latlng)
+		 {
+			 // in this case, we build an HTML DIV string
+			 // using the values in the data
+			 var htmlString = "<DIV id='popup'"+ feature.properties.id + "><h2>" +
+			feature.properties.name + "</h2><br>";
+			 htmlString = htmlString + "<h3>"+feature.properties.surname +
+			"</h3><br>";
+			 htmlString = htmlString + "<input type='radio' name='answer' id='"+feature.properties.id+"_1'/>"+feature.properties.module+"<br>";
+			 htmlString = htmlString + "<input type='radio' name='answer' id='"+feature.properties.id+"_2'/>"+feature.properties.language+"<br>";
+			 htmlString = htmlString + "<input type='radio' name='answer' id='"+feature.properties.id+"_3'/>"+feature.properties.lecturetime+"<br>";
+			 htmlString = htmlString + "<input type='radio' name='answer' id='"+feature.properties.id+"_4'/>"+feature.properties.port_id+"<br>";
+			 htmlString = htmlString + "<button onclick='checkAnswer(" +
+			feature.properties.id + ");return false;'>Submit Answer</button>";
+			 // now include a hidden element with the answer
+			 // in this case the answer is alwasy the first choice
+			 // for the assignment this will of course vary - you can use feature.properties.correct_answer
+			 htmlString = htmlString + "<div id=answer" + feature.properties.id +
+			" hidden>1</div>";
+			 htmlString = htmlString + "</div>";
+			 return L.marker(latlng).bindPopup(htmlString);
+		 },
+		 }).addTo(mymap);
+		 mymap.fitBounds(formLayer.getBounds());
+	} 
+
+	//code that will load the Form Data to map data AFTER the page has loaded
 	document.addEventListener('DOMContentLoaded', function() {
-    getFormData();
-    }, false); 
+    startFormDataLoad();
+    }, false);
 
-} 
-
+}
