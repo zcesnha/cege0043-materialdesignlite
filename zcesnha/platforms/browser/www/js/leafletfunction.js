@@ -1,9 +1,6 @@
-// Global Ajax Request for Form Data
-var client; 
+var formLayer; 
 
-var form; 
-
-// Function for creating Map Features
+ // Function for creating Map Features
 function addPointLinePoly () {
 
 	// add a point
@@ -57,7 +54,7 @@ function startFormDataLoad() {
 	// keep the layer global so that we can automatically pop up a
 	// pop-up menu on a point if necessary 
 	// we can also use this to determine distance for the proximity alert
-	var formLayer;
+	// var formLayer;
 
 	function loadFormData(formData) {
 		 // convert the text received from the server to JSON
@@ -96,11 +93,11 @@ function startFormDataLoad() {
     startFormDataLoad();
     }, false);
 
-   
 }
 
 //processes answer of Button click (simply returns answer atm)
 function checkAnswer(questionID) {
+	 
 	 // get the answer from the hidden div
 	 // NB - do this BEFORE you close the pop-up as when you close the pop-up the DIV is destroyed
 	 var answer = document.getElementById("answer"+questionID).innerHTML;
@@ -128,4 +125,38 @@ function checkAnswer(questionID) {
 	 // call an AJAX routine using the data
 	 // the answerSelected variable holds the number of the answer
 	 //that the user picked
+
 } 
+
+ function closestFormPoint() {
+ 
+	 // take the leaflet formdata layer
+	 // go through each point one by one
+	 // and measure the distance to Warren Street
+	 // for the closest point show the pop up of that point
+	 var minDistance = 100000000000;
+	 var closestFormPoint = 0; 
+	 
+	 // for this example, use the latitude/longitude of warren street
+	 // in your assignment replace this with the user's location
+	 var userlat = 51.524048;
+	 var userlng = -0.139924;
+	 formLayer.eachLayer(function(layer) {
+		 var distance = calculateDistance(userlat, userlng,layer.getLatLng().lat, layer.getLatLng().lng, 'K');
+		 if (distance < minDistance){
+			 minDistance = distance;
+			 closestFormPoint = layer.feature.properties.id;
+		 }
+	 });
+	 
+	 // for this to be a proximity alert, the minDistance must be
+	 // closer than a given distance - you can check that here
+	 // using an if statement
+	 // show the popup for the closest point
+	 formLayer.eachLayer(function(layer) {
+			 if (layer.feature.properties.id == closestFormPoint){
+			 		layer.openPopup();
+			 }
+	 });
+
+}
