@@ -1,6 +1,4 @@
-var formLayer; 
-
- // Function for creating Map Features
+// Function for creating Map Features
 function addPointLinePoly () {
 
 	// add a point
@@ -30,6 +28,9 @@ function addPointLinePoly () {
 
 } 
 
+//formLayer variable should be global to allow closestFormPoint function to operate 
+var formLayer; 
+
 function startFormDataLoad() {
 	
 	var xhrFormData;
@@ -50,11 +51,6 @@ function startFormDataLoad() {
 		 loadFormData(formData);
 	 	}
 	}
-
-	// keep the layer global so that we can automatically pop up a
-	// pop-up menu on a point if necessary 
-	// we can also use this to determine distance for the proximity alert
-	// var formLayer;
 
 	function loadFormData(formData) {
 		 // convert the text received from the server to JSON
@@ -90,7 +86,7 @@ function startFormDataLoad() {
 
 	//code that will load the Form Data to map data AFTER the page has loaded
 	document.addEventListener('DOMContentLoaded', function() {
-    startFormDataLoad();
+    	startFormDataLoad();
     }, false);
 
 }
@@ -128,8 +124,9 @@ function checkAnswer(questionID) {
 
 } 
 
- function closestFormPoint() {
- 
+//Generates pop-up of closest point 
+function closestFormPoint() {
+
 	 // take the leaflet formdata layer
 	 // go through each point one by one
 	 // and measure the distance to Warren Street
@@ -142,11 +139,11 @@ function checkAnswer(questionID) {
 	 var userlat = 51.524048;
 	 var userlng = -0.139924;
 	 formLayer.eachLayer(function(layer) {
-		 var distance = calculateDistance(userlat, userlng,layer.getLatLng().lat, layer.getLatLng().lng, 'K');
-		 if (distance < minDistance){
-			 minDistance = distance;
-			 closestFormPoint = layer.feature.properties.id;
-		 }
+			 var distance = calculateDistance(userlat, userlng,layer.getLatLng().lat, layer.getLatLng().lng, 'K');
+			 if (distance < minDistance){
+					 minDistance = distance;
+					 closestFormPoint = layer.feature.properties.id;
+		 	}
 	 });
 	 
 	 // for this to be a proximity alert, the minDistance must be
@@ -159,4 +156,5 @@ function checkAnswer(questionID) {
 			 }
 	 });
 
-}
+} 
+
